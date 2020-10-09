@@ -23,8 +23,8 @@ def data():
 
     # rfid_recv = [ id , status , 0]
 
-    response = make_response(json.dumps(rfid_recv))
-
+    #response = make_response(json.dumps(rfid_recv))
+    response = make_response(json.dumps(data))
     response.content_type = 'application/json'
 
     return response

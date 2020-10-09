@@ -29,6 +29,10 @@
     <div class="jumbotron">
         <h1 class="text-center text-">NTU Racing Team Realtime Sensor Visualization</h1>
     </div>
+
+    <div class="container" id="master-c" style="">
+
+    </div>
     
 
 
@@ -47,7 +51,7 @@
     </div>
 
 
-    <hr class="my-4">
+    <!-- <hr class="my-4"> -->
 
     <div>
 
@@ -63,7 +67,7 @@
         </div>
     </div>
 
-    <hr class="my-4">
+    <!-- <hr class="my-4"> -->
 
     <script>
         var chartVelocity;
@@ -99,8 +103,17 @@
                 data2.push(result[2]);
 
                 var datadiv = document.createElement("DIV")
-                datadiv.innerHTML = "id:"+result[0]+"<br>status:"+result[1]
+                var iddiv = document.createElement("DIV")
+                var statusdiv = document.createElement("DIV")
+                //datadiv.style["display"] = "inline"
+                iddiv.style["display"] = "inline"
+                statusdiv.style["display"] = "inline"
+                iddiv.innerHTML ="id:"+result[0]+","
+                statusdiv.innerHTML ="status:"+result[1]+","
+                //datadiv.innerHTML = "id:"+result[0]+"<br>status:"+result[1]
                 document.body.appendChild(datadiv)
+                datadiv.appendChild(iddiv)
+                datadiv.appendChild(statusdiv)
 
 
                 chartVelocity.series[0].addPoint(data1, true, shiftVelocity);
@@ -108,7 +121,7 @@
 
 
                 // call it again after one second
-                setTimeout(requestData, 100);
+                setTimeout(requestData, 2000);
 
             });
         }
@@ -158,7 +171,7 @@
                         renderTo: 'data-SOC',
                         defaultSeriesType: 'area',
                         events: {
-                            load: requestData
+                            // load: requestData
                         }
                     },
                 title:
