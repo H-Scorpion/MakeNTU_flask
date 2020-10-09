@@ -19,7 +19,11 @@ def data():
 
     data = [time() * 1000, Velocity, SOC]
 
-    response = make_response(json.dumps(data))
+    #define variable rfid_recv
+
+    # rfid_recv = [ id , status , 0]
+
+    response = make_response(json.dumps(rfid_recv))
 
     response.content_type = 'application/json'
 
