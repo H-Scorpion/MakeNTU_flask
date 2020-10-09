@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+
+    <title>NTU Racing Team</title>
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+</head>
+
+<body>
+
+    <div class="jumbotron">
+        <h1 class="text-center text-">NTU Racing Team Realtime Sensor Visualization</h1>
+    </div>
+    
+    <br>
+    <br>
+
+	<h3>Velocity:</h3>
+    <div id = "Value_Velocity">
+    </div>
+
+    <br>
+    <br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-Velocity">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <hr class="my-4">
+
+    <div>
+	<h3>SoC:</h3>
+
+    </div>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-SOC">
+
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <script>
+        var chartVelocity;
+        var chartSOC;
+
+        function requestData()
+        {
+            // Ajax call to get the Data from Flask
+            var requests = $.get('/data');
+            console.log(requests)
+
+            var ve = requests.done(function (result)
+            {
+                // Velocity
+                var seriesVelocity = chartVelocity.series[0],
+                    shiftVelocity = seriesVelocity.data.length > 400;
+
+                // SOC
+                var seriesSOC = chartSOC.series[0],
+                    shiftSOC = seriesSOC.data.length > 400;
+
+                // Add the Point
+                // Time - Velocity
+                var data1 = [];
+                data1.push(result[0]);
+                data1.push(result[1]);
+
+
+                // Add the Point
+                // Time - SOC
+                var data2 = [];
+                data2.push(result[0]);
+                data2.push(result[2]);
+
+
+                chartVelocity.series[0].addPoint(data1, true, shiftVelocity);
+                chartSOC.series[0].addPoint(data2, true, shiftSOC);
+
+
+                // call it again after one second
+                setTimeout(requestData, 100);
+
+            });
+        }
+
+        $(document).ready(function()
+        {
+            // --------------Chart 1 ----------------------------
+            chartVelocity = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-Velocity',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'Velocity'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Speed(km)',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'Velocity',
+                    data: []
+                }]
+            });
+            // --------------Chart 1 Ends -----------------------
+
+            // --------------Chart 2 ----------------------------
+            chartSOC = new Highcharts.Chart({
+                chart:
+                    {
+                        renderTo: 'data-SOC',
+                        defaultSeriesType: 'area',
+                        events: {
+                            load: requestData
+                        }
+                    },
+                title:
+                    {
+                        text: 'SoC'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Remaining Power(%)',
+                        margin: 80
+                    }
+                },
+                series: [{
+                    lineColor: '#1d82b8',
+                    name: 'SOC',
+                    data: []
+                }]
+            });
+
+            // --------------Chart 2 Ends ------------------
+
+        });
+    </script>
+
+
+
+<script>
+    class Image{
+
+        constructor(imgUrl, size)
+        {
+            this.imgUrl=imgUrl;
+            this.size=size;
+        }
+
+        backgroundImage()
+        {
+            console.log("inside function ")
+            // Select the Image
+            var img = document.querySelector(".jumbotron");
+            // create Css Text
+            var text = "margin:auto;"+
+                "background-image: url("+this.ingUrl+");" +
+                "background-size:cover;"+
+                "opacity:1;"+
+                "background-blend-mode: darken;"+
+                "height: "+ this.size + "vh;";
+
+            img.style.cssText =  text;
+        }
+
+        centerTitle()
+        {
+            /*
+                Center the Title
+             */
+            var t1 = document.querySelector("#title");
+            t1.classList.add("text-white");
+            t1.classList.add("text-center");
+            t1.classList.add("display-3");
+        }
+    }
+    const imgUrl = 'https://i.imgur.com/uJp6rlp.jpg'
+    const size = "30";
+    var obj = new Image(imgUrl, size);
+    obj.backgroundImage();
+    obj.centerTitle();
+    </script>
+
+
+</body>
+
+
+</html>
