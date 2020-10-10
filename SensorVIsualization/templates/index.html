@@ -188,18 +188,25 @@ overflow: hidden;">
 
 
         function checkboxOnClick(clickedElement){
-            console.log(clickedElement.id)
+            console.log("clickedElement.id:"+clickedElement.id)
             const node = document.getElementById("detail"+clickedElement.id);
             console.log(node)
             var clickedele_index = todoListData.indexOf(document.getElementById(clickedElement.id))
             todoListData[clickedele_index].isComplete = !todoListData[clickedele_index].isComplete
+            console.log("todoListData"+todoListData)
+            console.log("clickedele_index"+clickedele_index)
             if(todoListData[clickedele_index].isComplete===true){
                 node.style["text-decoration"] = "line-through";
                 node.style["opacity"] = 0.5;
+                document.getElementById(clickedElement.id).style["background"] = "#26ca299b";
+                
             }
             else{
                 node.style["text-decoration"] = "none";
-                node.style["opacity"] = 1;  
+                node.style["opacity"] = 1;
+                document.getElementById(clickedElement.id).style["background"] = "rgba(99, 99, 99, 0.698)";
+                
+                  
             }    
             //todoCount = document.getElementById("total");
             todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
@@ -384,9 +391,11 @@ overflow: hidden;">
                     checkboxOnClick(document.getElementById(result[0]))
                 }
                 catch(e){
+                    console.log(result[0])
                     //const newItem = CreateNewItem(obj_dic[result[0]])
                     const newItem = CreateNewItem(obj_dic[result[0]])
-                    checkboxOnClick(document.getElementById(result[0]))
+                    console.log("id"+id)
+                    checkboxOnClick(document.getElementById(id-1)) //id++ right after being created 
                 }
         
                 //---------------------------
@@ -395,7 +404,7 @@ overflow: hidden;">
 
                 // ---------------------------------------
                 // call it again after one second
-                setTimeout(requestData, 500);
+                setTimeout(requestData, 100);
 
             });
         }
@@ -502,10 +511,7 @@ overflow: hidden;">
             /*
                 Center the Title
              */
-            var t1 = document.querySelector("#title");
-            t1.classList.add("text-white");
-            t1.classList.add("text-center");
-            t1.classList.add("display-3");
+
         }
     }
     const imgUrl = 'https://i.imgur.com/uJp6rlp.jpg'

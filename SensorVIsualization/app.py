@@ -1,3 +1,4 @@
+#debug
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 
@@ -12,18 +13,19 @@ app = Flask(__name__)
 Blue = 29
 Pink = 31
 
+debug
 GPIO.setmode(GPIO.BOARD)
 # set up pin 11 as an output
 GPIO.setup(Blue, GPIO.OUT)
 GPIO.setup(Pink, GPIO.OUT)
 
-@app.route('/', methods=["GET", "POST"])
-def main():
-    print('state3')
-    return render_template('index.html')
+# @app.route('/', methods=["GET", "POST"])
+# def main():
+#     print('state3')
+#     return render_template('index.html')
 
 
-#@app.route('/data', methods=["GET", "POST"])
+# @app.route('/data', methods=["GET", "POST"])
 # def data():
 #     # Data Format [ Time, Velocity, SOC]
 #     Velocity = random()*150  
