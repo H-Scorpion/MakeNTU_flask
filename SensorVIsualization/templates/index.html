@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html  lang="en" dir="ltr">
-<link rel="stylesheet" type="text/css" href= "{{ url_for('static', filename = 'style.css') }}">
+<link rel="stylesheet" type="text/css" href= "{{ url_for('static', filename = 'css/style.css') }}">
 <head>
     <meta charset="utf-8">
 
@@ -25,7 +25,10 @@
 
 </head>
 
-<body>
+<body style="    height: 100%;
+font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+background: rgb(245, 245, 245);
+overflow: hidden;">
 
 
 
@@ -33,12 +36,40 @@
     <!-- <div class="container" id="master-c" style=""> -->
 
     </div>
-    <div id="root" class="todo-app__root">
-        <header class="todo-app__header">
-            <h1 class="todo-app__title">todos</h1>
+    <div id="root" class="todo-app__root" style="    
+    margin: 0 auto;
+    /* margin-top: 7em; */
+    width: 50em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1em;
+    color: #4d4d4d;
+    font-weight: 300;">
+        <header class="todo-app__header" style="margin-bottom: 1em;">
+            <h1 class="todo-app__title" style="    
+            font-size: 100px;
+            font-weight: 100;
+            text-align: center;
+            color: rgba(175, 47, 47, 0.15);
+            margin: 0;
+            padding: 0;">E-BAG</h1>
         </header>
-        <section class="todo-app__main" id="input">
-            <input class="todo-app__input" id="todo-input"  placeholder="What needs to be done?">
+        <section class="todo-app__main" id="input" style="width: 100%;">
+            <input class="todo-app__input" id="todo-input"  placeholder="What needs to be done?" style="
+            padding: 16px;
+            border: none;
+            color: inherit;
+            background: rgba(254, 254, 254);
+            font-size: 24px;
+            font-weight: 200;
+            line-height: 1.4em;
+            width: 100%;
+            background: rgb(254, 254, 254);
+            box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.048);
+            border: 1px solid rgba(0, 0, 0, 0.089);
+            height: 5rem;">
         </section>
         
 
@@ -461,14 +492,7 @@
             // Select the Image
             var img = document.querySelector(".jumbotron");
             // create Css Text
-            var text = "margin:auto;"+
-                "background-image: url("+this.ingUrl+");" +
-                "background-size:cover;"+
-                "opacity:1;"+
-                "background-blend-mode: darken;"+
-                "height: "+ this.size + "vh;";
 
-            img.style.cssText =  text;
         }
 
         centerTitle()
