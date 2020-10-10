@@ -1,6 +1,6 @@
 #-----comment-while-debug----------
-# import RPi.GPIO as GPIO
-# from mfrc522 import SimpleMFRC522
+import RPi.GPIO as GPIO
+from mfrc522 import SimpleMFRC522
 #----------------------------------
 from flask import Flask,render_template,url_for,request,redirect, make_response
 import random
@@ -16,10 +16,10 @@ Blue = 29
 Pink = 31
 
 #-----comment-while-debug----------
-# GPIO.setmode(GPIO.BOARD)
-# # set up pin 11 as an output
-# GPIO.setup(Blue, GPIO.OUT)
-# GPIO.setup(Pink, GPIO.OUT)
+GPIO.setmode(GPIO.BOARD)
+# set up pin 11 as an output
+GPIO.setup(Blue, GPIO.OUT)
+GPIO.setup(Pink, GPIO.OUT)
 #----------------------------------
 
 @app.route('/', methods=["GET", "POST"])
@@ -34,37 +34,37 @@ rfid_dic={
     }
 
 #---------------for debug--------------------
-@app.route('/data', methods=["GET", "POST"])
-def data():
-    # Data Format [ Time, Velocity, SOC]
-    Velocity = random()*150  
-    SOC = random()*100
+# @app.route('/data', methods=["GET", "POST"])
+# def data():
+#     # Data Format [ Time, Velocity, SOC]
+#     Velocity = random()*150  
+#     SOC = random()*100
 
-    rfid_num=input("rfid_num:")
-    status=input("status:")
-    tmp3=input("tmp3")
+#     rfid_num=input("rfid_num:")
+#     status=input("status:")
+#     tmp3=input("tmp3")
 
-    # id mapping 
-    # 0:wallet
-    # 1:phone
+#     # id mapping 
+#     # 0:wallet
+#     # 1:phone
     
 
-    #data = [time() * 1000, Velocity, SOC]
-    data = [rfid_num,status,tmp3]
-    #define variable rfid_recv
+#     #data = [time() * 1000, Velocity, SOC]
+#     data = [rfid_num,status,tmp3]
+#     #define variable rfid_recv
 
-    # rfid_recv = [ id , status , 0]
+#     # rfid_recv = [ id , status , 0]
 
-    #response = make_response(json.dumps(rfid_recv))
-    response = make_response(json.dumps(data))
-    response.content_type = 'application/json'
+#     #response = make_response(json.dumps(rfid_recv))
+#     response = make_response(json.dumps(data))
+#     response.content_type = 'application/json'
 
-    return response
+#     return response
 
 
-if __name__ == "__main__":
-    print(__name__)
-    app.run(debug=True, port=8888)
+# if __name__ == "__main__":
+#     print(__name__)
+#     app.run(debug=True, port=8888)
 # #------------------------------------------
 
 
@@ -90,7 +90,7 @@ def data():
         print(text)
         try:
             data = [rfid_dic[rfid_num], text, time.time()]
-        except(e):
+        except:
             data = [tmp_index, text, time.time()]
             tmp_index+=1
         time.sleep(1)
