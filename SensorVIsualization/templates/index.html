@@ -195,6 +195,17 @@ overflow: hidden;">
             detail.setAttribute("onClick", "detailOnClick(this)")
             todoListData[id] = document.getElementById(id);
             todoListData[id].isComplete = false;
+            if(todoListData[id].purpose=="hiking"){
+                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="hiking" && !e.isComplete).length+"left"
+            }
+            if(todoListData[id].purpose=="party"){
+                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="party" && !e.isComplete).length+"left"
+
+            }
+            else{
+                todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
+                console.log(todoListData)
+            }
 
             // todoListData["num"+id] = document.getElementById(id);
             // todoListData["num"+id].isComplete = false;
@@ -232,10 +243,12 @@ overflow: hidden;">
                   
             }    
             //todoCount = document.getElementById("total");
-            if(clickedElement.purpose=="hiking"){
-                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="hiking" && !e.isComplete).length+"left"
+            if(clickedElement.purpose==="hiking"){
+                console.log("purpose=hiking")
+                console.log(todoListData.filter(e=> e.purpose==="hiking").filter(e=>!e.isComplete))
+                todoCount.innerHTML = todoListData.filter(e=> e.purpose == "hiking" && !e.isComplete).length+"left"
             }
-            if(clickedElement.purpose=="party"){
+            else if(clickedElement.purpose==="party"){
                 todoCount.innerHTML = todoListData.filter(e=> e.purpose==="party" && !e.isComplete).length+"left"
 
             }
@@ -260,7 +273,17 @@ overflow: hidden;">
 
             //count not complete
             //Object.keys(todoListData).filter(ele => todoListData.ele===false)
-            todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
+            if(clickedElement.purpose=="hiking"){
+                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="hiking" && !e.isComplete).length+"left"
+            }
+            if(clickedElement.purpose=="party"){
+                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="party" && !e.isComplete).length+"left"
+
+            }
+            else{
+                todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
+                console.log(todoListData)
+            }
             console.log("todoListDat:"+todoListData)
             //todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
 
@@ -371,7 +394,7 @@ overflow: hidden;">
                     console.log(event.target.value)
                     const newItem = CreateNewItem(event.target.value)
                     input.value=""            
-                    todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
+                    
                     console.log("todoListDat:")
                     console.log(todoListData)
                     }
