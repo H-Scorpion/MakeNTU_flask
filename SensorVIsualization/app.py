@@ -83,6 +83,7 @@ def data():
 
     
     # Data Format [ Time, Velocity, SOC]
+    global tmp_index
 
     if text != ' ':
         GPIO.output(Pink,False)
@@ -92,7 +93,7 @@ def data():
         try:
             data = [rfid_dic[rfid_num], text, time.time()]
         except:
-            data = [global tmp_index, text, time.time()]
+            data = [tmp_index, text, time.time()]
             tmp_index+=1
         time.sleep(1)
         
