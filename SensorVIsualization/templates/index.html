@@ -158,7 +158,9 @@ overflow: hidden;">
             checklabel.setAttribute("for",id)    
             detail.setAttribute("class","todo-app__item-detail")  
             detail.setAttribute("id","detail"+id)   
-            itemimg.setAttribute("src","./img/x.png");
+            //itemimg.setAttribute("src","./img/x.png");
+            itemimg.setAttribute("src","{{ url_for('static', filename = 'img/x.png') }}");
+            //{{ url_for('static', filename = 'css/style.css') }}
             itemimg.setAttribute("class","todo-app__item-x");
             itemimg.setAttribute("id","x"+id);
 
@@ -374,7 +376,7 @@ overflow: hidden;">
                 // obj_dic[{
                 //     0:"backback"
                 // }]
-                var obj_dic=["bottle"]
+                var obj_dic=[,,,"bottle"]
                 
                 
             
