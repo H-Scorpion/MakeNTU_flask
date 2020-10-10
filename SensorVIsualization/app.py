@@ -16,9 +16,18 @@ def data():
     # Data Format [ Time, Velocity, SOC]
     Velocity = random()*150  
     SOC = random()*100
+    
+    tmp1=input("tmp1")
+    tmp2=input("tmp1")
+    tmp3=input("tmp1")
 
-    data = [time() * 1000, Velocity, SOC]
+    # id mapping 
+    # 0:wallet
+    # 1:phone
+    
 
+    #data = [time() * 1000, Velocity, SOC]
+    data = [tmp1,tmp2,tmp3]
     #define variable rfid_recv
 
     # rfid_recv = [ id , status , 0]
@@ -32,5 +41,37 @@ def data():
 
 if __name__ == "__main__":
     print(__name__)
-    app.run(debug=True)
+    app.run(debug=True, port=8888)
+
+# def data():
+# 	print('state1')
+
+# 	reader = SimpleMFRC522()
+
+# 	GPIO.output(Blue,False)
+# 	GPIO.output(Pink,True)
+
+# 	id, text = reader.read()
+
+# 	# Data Format [ Time, Velocity, SOC]
+# 	if text != ' ':
+# 		GPIO.output(Pink,False)
+# 		GPIO.output(Blue,True)
+# 		print(id)
+# 		print(text)
+# 		data = [id, text, time.time()]
+# 		time.sleep(1)
+
+# 	response = make_response(json.dumps(data))
+
+# 	response.content_type = 'application/json'
+
+# 	return response
+
+
+# if __name__ == "__main__":
+# 	try:
+# 		app.run(debug=True)
+# 	finally:
+# 		GPIO.cleanup()
     

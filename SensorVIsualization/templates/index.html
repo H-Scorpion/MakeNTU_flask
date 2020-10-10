@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html  lang="en" dir="ltr">
+<link rel="stylesheet" type="text/css" href= "{{ url_for('static', filename = 'style.css') }}">
 <head>
     <meta charset="utf-8">
 
@@ -26,12 +27,32 @@
 
 <body>
 
-    <div class="jumbotron">
-        <h1 class="text-center text-">NTU Racing Team Realtime Sensor Visualization</h1>
+
+
+
+    <!-- <div class="container" id="master-c" style=""> -->
+
     </div>
+    <div id="root" class="todo-app__root">
+        <header class="todo-app__header">
+            <h1 class="todo-app__title">todos</h1>
+        </header>
+        <section class="todo-app__main" id="input">
+            <input class="todo-app__input" id="todo-input"  placeholder="What needs to be done?">
+        </section>
+        
 
-    <div class="container" id="master-c" style="">
-
+        <footer class="todo-app__footer" id="todo-footer">
+            <div class="todo-app__total" id="total"> 0 left </div>
+            <ul class="todo-app__view-buttons">
+                <button id="btn_all" >All</button>
+                <button id="btn_active">Active</button>
+                <button id="btn_completed">Completed</button>
+            </ul>
+            <div class="todo-app__clean">
+                <button id="clear" onclick="clear_completed()">Clear Completed</button>
+            </div>
+        </footer>
     </div>
     
 
@@ -70,6 +91,199 @@
     <!-- <hr class="my-4"> -->
 
     <script>
+        //------------add inclass script here
+        const input = document.getElementById('todo-input');
+
+        var id = 0;
+        var todoListData=[];
+        var todoCount = document.getElementById("total");
+        const btn_all = document.getElementById("btn_all")
+        const btn_active = document.getElementById("btn_active")
+        const btn_completed = document.getElementById("btn_completed")
+
+        function CreateNewItem(keyin){
+            if (id ===0){    
+                //初始化ul    
+                const check_list = document.createElement("UL");
+                document.getElementById("input").appendChild(check_list)
+                check_list.setAttribute("class","todo-app__list")
+                check_list.setAttribute("id","todo-list")
+            } 
+            
+            const itemNode = document.createElement("LI");
+            const wrapper = document.createElement("DIV");
+            const checkbox = document.createElement("INPUT");
+            const detail = document.createElement("H1");
+            const itemimg = document.createElement("IMG");
+            const checklabel = document.createElement("label")
+
+            itemNode.setAttribute("class","todo-app__item")
+            wrapper.setAttribute("class","todo-app__checkbox")
+            checkbox.setAttribute("id", id);
+            checkbox.setAttribute("class","todo-item-input");
+            checkbox.setAttribute("type","checkbox")
+
+            
+            checklabel.setAttribute("for",id)    
+            detail.setAttribute("class","todo-app__item-detail")  
+            detail.setAttribute("id","detail"+id)   
+            itemimg.setAttribute("src","./img/x.png");
+            itemimg.setAttribute("class","todo-app__item-x");
+            itemimg.setAttribute("id","x"+id);
+
+            detail.innerHTML = keyin + " "+ id;
+
+            wrapper.appendChild(checkbox);
+            wrapper.appendChild(checklabel);
+            itemNode.appendChild(wrapper);    
+            itemNode.appendChild(detail);
+            itemNode.appendChild(itemimg);
+
+
+            document.getElementById("todo-list").appendChild(itemNode)
+            checkbox.setAttribute("onClick", "checkboxOnClick(this)"); //函數加引號
+            itemimg.setAttribute("onClick", "xOnClick(this)");
+            todoListData[id] = document.getElementById(id);
+            todoListData[id].isComplete = false;
+
+            // todoListData["num"+id] = document.getElementById(id);
+            // todoListData["num"+id].isComplete = false;
+
+            id+=1;
+
+            }
+
+
+        function checkboxOnClick(clickedElement){
+            console.log(clickedElement.id)
+            const node = document.getElementById("detail"+clickedElement.id);
+            console.log(node)
+            var clickedele_index = todoListData.indexOf(document.getElementById(clickedElement.id))
+            todoListData[clickedele_index].isComplete = !todoListData[clickedele_index].isComplete
+            if(todoListData[clickedele_index].isComplete===true){
+                node.style["text-decoration"] = "line-through";
+                node.style["opacity"] = 0.5;
+            }
+            else{
+                node.style["text-decoration"] = "none";
+                node.style["opacity"] = 1;  
+            }    
+            //todoCount = document.getElementById("total");
+            todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
+            console.log(todoListData)
+        }
+
+        function xOnClick(clickedElement){
+            var clicked_id = clickedElement.id.replace("x","")     
+            console.log("removed id = "+ clicked_id) 
+            console.log("indexOf = "+ todoListData.indexOf(document.getElementById(clicked_id)) )
+            todoListData.splice(todoListData.indexOf(document.getElementById(clicked_id)) ,1) //要先刪list
+            document.getElementById("todo-list").removeChild(clickedElement.parentNode)  //才能刪block，不然list中存的物件已經消失了
+            delnum = "num" + clicked_id
+            delete todoListData.delnum
+            todoCount = document.getElementById("total");
+            //console.log(todoListData)
+            //for(i = 0; i<todoListData. ) 
+
+            //count not complete
+            //Object.keys(todoListData).filter(ele => todoListData.ele===false)
+            todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
+            console.log("todoListDat:"+todoListData)
+            //todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
+
+        }
+
+        function clear_completed(){
+            var finished_item=todoListData.filter(ele => ele.isComplete===true)
+            console.log("finished_item:"+finished_item)
+            finished_item.forEach(ele=>{
+                console.log("finished id:"+ele.id); 
+                console.log("index of finished id"+ele.id+" in todoListData:"+todoListData.indexOf(document.getElementById(ele.id)));  
+                todoListData.splice(todoListData.indexOf(document.getElementById(ele.id)) ,1)       
+                document.getElementById("todo-list").removeChild(document.getElementById(ele.id).parentNode.parentNode)
+                
+            })
+            console.log("todoListDat:")
+            console.log(todoListData)
+        }
+
+
+
+        btn_all.setAttribute("onClick","allonclick()")
+        function allonclick(){
+            todoListData.forEach(e=>{
+                // e.parentNode.parentNode.style.display = "visible"
+                console.log(e.parentNode.parentNode)
+                e.parentNode.parentNode.style.display=""
+            })
+        }
+
+        btn_active.setAttribute("onClick","activeonclick()")
+
+        function activeonclick(){
+            // todoListData.filter(ele => ele.isComplete).forEach(e=>{
+            //     // document.getElementById("todo-list").removeChild(e.parentNode.parentNode)
+            //     // e.parentNode.parentNode.style.visibility="hidden"
+            //     e.parentNode.parentNode.style.display="none"
+            // })
+            todoListData.forEach(e=>{
+                if (!e.isComplete){
+                    e.parentNode.parentNode.style.display="" 
+                }
+                else{
+                    e.parentNode.parentNode.style.display="none" 
+                }
+            })
+
+        }
+
+        btn_completed.setAttribute("onClick","completedonclick()")
+
+        function completedonclick(){
+            // todoListData.filter(ele => !ele.isComplete).forEach(e=>{
+            //     // document.getElementById("todo-list").removeChild(e.parentNode.parentNode)
+            //     // e.parentNode.parentNode.style.visibility="hidden"
+            //     e.parentNode.parentNode.style.display="none"
+            // })
+            todoListData.forEach(e=>{
+                if (e.isComplete){
+                    e.parentNode.parentNode.style.display="" 
+                }
+                else{
+                    e.parentNode.parentNode.style.display="none" 
+                }
+            })
+        }
+
+
+
+
+        input.addEventListener('keyup', 
+            event => {
+                if(event.key==="Enter" && event.target.value !== ''){
+                    console.log(event.target.value)
+                    const newItem = CreateNewItem(event.target.value)
+                    input.value=""            
+                    todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
+                    console.log("todoListDat:")
+                    console.log(todoListData)
+                    }
+            }
+            ,false);
+
+        //---end inclass todo
+
+        //--------obj id mapping--------
+        
+        //
+
+
+
+
+
+
+
+
         var chartVelocity;
         var chartSOC;
 
@@ -118,10 +332,28 @@
 
                 chartVelocity.series[0].addPoint(data1, true, shiftVelocity);
                 chartSOC.series[0].addPoint(data2, true, shiftSOC);
+                // --------add code here-----------------
+                //----------add obj----------
+                // var todoListid = todoListData.forEach(element => {
+                //     element.id
+                // })
+                // if(result[0])
+                // const newItem = CreateNewItem(result[0])
+
+                try{
+                    checkboxOnClick(document.getElementById(result[0]))
+                }
+                catch(e){
+                    const newItem = CreateNewItem(result[0])
+                }
+        
+                //---------------------------
 
 
+
+                // ---------------------------------------
                 // call it again after one second
-                setTimeout(requestData, 2000);
+                setTimeout(requestData, 500);
 
             });
         }
