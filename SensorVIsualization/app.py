@@ -60,7 +60,7 @@ def data():
 	id, text = reader.read()
 
     # rfid num: id
-    rfid_dic={       
+    rfid_dic={
         385426309652 : 3
     }
 
