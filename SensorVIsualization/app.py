@@ -30,7 +30,8 @@ def main():
 rfid_dic={
         385426309652 : 0,
         896299244541 : 1,
-        238281908376 :3
+        238281908376 : 3,
+        621160444430 : 4
     }
 
 #---------------for debug--------------------
@@ -91,7 +92,7 @@ def data():
         try:
             data = [rfid_dic[rfid_num], text, time.time()]
         except:
-            data = [tmp_index, text, time.time()]
+            data = [global tmp_index, text, time.time()]
             tmp_index+=1
         time.sleep(1)
         
