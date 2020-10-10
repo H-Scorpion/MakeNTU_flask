@@ -339,12 +339,21 @@
                 // })
                 // if(result[0])
                 // const newItem = CreateNewItem(result[0])
-
+                
+                // obj_dic[{
+                //     0:"backback"
+                // }]
+                var obj_dic=["bottle"]
+                
+                
+            
                 try{
                     checkboxOnClick(document.getElementById(result[0]))
                 }
                 catch(e){
-                    const newItem = CreateNewItem(result[0])
+                    //const newItem = CreateNewItem(obj_dic[result[0]])
+                    const newItem = CreateNewItem(obj_dic[result[0]])
+                    checkboxOnClick(document.getElementById(result[0]))
                 }
         
                 //---------------------------

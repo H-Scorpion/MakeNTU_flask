@@ -16,10 +16,14 @@ def data():
     # Data Format [ Time, Velocity, SOC]
     Velocity = random()*150  
     SOC = random()*100
+    # rfid num: id
+    rfid_dic={       
+        385426309652 : 0
+    }
     
-    tmp1=input("tmp1")
-    tmp2=input("tmp1")
-    tmp3=input("tmp1")
+    tmp1=input("id")
+    tmp2=input("status")
+    tmp3=input("tmp3")
 
     # id mapping 
     # 0:wallet
