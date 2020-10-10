@@ -56,20 +56,15 @@ overflow: hidden;">
             margin: 0;
             padding: 0;">E-BAG</h1>
         </header>
+        <footer class="todo-app__footer" id="todo-footer">
+            <ul class="todo-app__view-buttons">
+                <button id="btn_all" >All</button>
+                <button id="btn_hiking" >hiking</button>
+                <button id="btn_party">party</button>                
+            </ul>
+        </footer>
         <section class="todo-app__main" id="input" style="width: 100%;">
-            <input class="todo-app__input" id="todo-input"  placeholder="What needs to be done?" style="
-            padding: 16px;
-            border: none;
-            color: inherit;
-            background: rgba(254, 254, 254);
-            font-size: 24px;
-            font-weight: 200;
-            line-height: 1.4em;
-            width: 100%;
-            background: rgb(254, 254, 254);
-            box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.048);
-            border: 1px solid rgba(0, 0, 0, 0.089);
-            height: 5rem;">
+            <input class="todo-app__input" id="todo-input"  placeholder="What needs to be done?" >
         </section>
         
 
@@ -133,6 +128,8 @@ overflow: hidden;">
         const btn_all = document.getElementById("btn_all")
         const btn_active = document.getElementById("btn_active")
         const btn_completed = document.getElementById("btn_completed")
+        const btn_hiking = document.getElementById("btn_hiking")
+        const btn_party = document.getElementById("btn_party")
 
         // function load_data(data){
         //     if(data){
@@ -195,6 +192,7 @@ overflow: hidden;">
             document.getElementById("todo-list").appendChild(itemNode)
             checkbox.setAttribute("onClick", "checkboxOnClick(this)"); //函數加引號
             itemimg.setAttribute("onClick", "xOnClick(this)");
+            detail.setAttribute("onClick", "detailOnClick(this)")
             todoListData[id] = document.getElementById(id);
             todoListData[id].isComplete = false;
 
@@ -204,6 +202,11 @@ overflow: hidden;">
             id+=1;
 
             }
+
+        function detailOnClick(clickedElement){
+            var purpose  = prompt("please input category")
+            clickedElement.parentNode.querySelector(".todo-item-input").purpose = purpose
+        }
 
 
         function checkboxOnClick(clickedElement){
@@ -229,8 +232,18 @@ overflow: hidden;">
                   
             }    
             //todoCount = document.getElementById("total");
-            todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
-            console.log(todoListData)
+            if(clickedElement.purpose=="hiking"){
+                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="hiking" && !e.isComplete).length+"left"
+            }
+            if(clickedElement.purpose=="party"){
+                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="party" && !e.isComplete).length+"left"
+
+            }
+            else{
+                todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
+                console.log(todoListData)
+            }
+
         }
 
         function xOnClick(clickedElement){
@@ -276,6 +289,7 @@ overflow: hidden;">
                 console.log(e.parentNode.parentNode)
                 e.parentNode.parentNode.style.display=""
             })
+            todoCount.innerHTML = todoListData.filter(ele => !ele.isComplete).length + " left";
         }
 
         btn_active.setAttribute("onClick","activeonclick()")
@@ -313,6 +327,39 @@ overflow: hidden;">
                     e.parentNode.parentNode.style.display="none" 
                 }
             })
+        }
+
+        btn_hiking.setAttribute("onClick","hikingonclick()")
+
+        function hikingonclick(){
+            // todoListData.filter(ele => !ele.isComplete).forEach(e=>{
+            //     // document.getElementById("todo-list").removeChild(e.parentNode.parentNode)
+            //     // e.parentNode.parentNode.style.visibility="hidden"
+            //     e.parentNode.parentNode.style.display="none"
+            // })
+            todoListData.forEach(e=>{
+                if (e.purpose==="hiking"){
+                    e.parentNode.parentNode.style.display="" 
+                }
+                else{
+                    e.parentNode.parentNode.style.display="none" 
+                }
+            })
+            todoCount.innerHTML = todoListData.filter(e=> e.purpose==="hiking" && !e.isComplete).length+"left"
+        }
+
+        btn_party.setAttribute("onClick","partyonclick()")
+
+        function partyonclick(){
+            todoListData.forEach(e=>{
+                if (e.purpose==="party"){
+                    e.parentNode.parentNode.style.display="" 
+                }
+                else{
+                    e.parentNode.parentNode.style.display="none" 
+                }
+            })
+            todoCount.innerHTML = todoListData.filter(e=> e.purpose==="party" && !e.isComplete).length+"left"
         }
 
 
@@ -420,12 +467,15 @@ overflow: hidden;">
                 
                 var obj_id = result[0]
                 try{
+                    
                     check_objname_id()
                     console.log("objname_to_id:"+objname_to_id)
                     checkboxOnClick(document.getElementById(objname_to_id[obj_dic[obj_id]]))
                     // document.getElementById(0).style["background"] = "#26ca299b";
+                    console.log("try")
                 }
                 catch(e){
+                    console.log("error")
                     console.log(e)
                     console.log(result[0])
                     //const newItem = CreateNewItem(obj_dic[result[0]])
