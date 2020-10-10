@@ -127,10 +127,27 @@ overflow: hidden;">
 
         var id = 0;
         var todoListData=[];
+        // var objname_to_id = new Object;
+        var objname_to_id = new Object
         var todoCount = document.getElementById("total");
         const btn_all = document.getElementById("btn_all")
         const btn_active = document.getElementById("btn_active")
         const btn_completed = document.getElementById("btn_completed")
+
+        // function load_data(data){
+        //     if(data){
+
+        //     }
+
+        // }
+
+        function check_objname_id(){
+            todoListData.forEach(e=>{
+                console.log("e.id:"+e.id)
+                console.log(objname_to_id)
+                objname_to_id[document.getElementById("detail"+e.id).innerHTML] = e.id
+            })
+        }
 
         function CreateNewItem(keyin){
             if (id ===0){    
@@ -155,7 +172,8 @@ overflow: hidden;">
             checkbox.setAttribute("type","checkbox")
 
             
-            checklabel.setAttribute("for",id)    
+            checklabel.setAttribute("for",id)   
+            checklabel.setAttribute("id","label"+id)    
             detail.setAttribute("class","todo-app__item-detail")  
             detail.setAttribute("id","detail"+id)   
             //itemimg.setAttribute("src","./img/x.png");
@@ -164,7 +182,8 @@ overflow: hidden;">
             itemimg.setAttribute("class","todo-app__item-x");
             itemimg.setAttribute("id","x"+id);
 
-            detail.innerHTML = keyin + " "+ id;
+            //detail.innerHTML = keyin + " "+ id;
+            detail.innerHTML = keyin
 
             wrapper.appendChild(checkbox);
             wrapper.appendChild(checklabel);
@@ -199,13 +218,14 @@ overflow: hidden;">
                 node.style["text-decoration"] = "line-through";
                 node.style["opacity"] = 0.5;
                 document.getElementById(clickedElement.id).style["background"] = "#26ca299b";
+                document.getElementById("label"+clickedElement.id).style["background"] = "#26ca299b";
                 
             }
             else{
                 node.style["text-decoration"] = "none";
                 node.style["opacity"] = 1;
                 document.getElementById(clickedElement.id).style["background"] = "rgba(99, 99, 99, 0.698)";
-                
+                document.getElementById("label"+clickedElement.id).style["background"] = "rgba(99, 99, 99, 0.698)";
                   
             }    
             //todoCount = document.getElementById("total");
@@ -383,19 +403,36 @@ overflow: hidden;">
                 // obj_dic[{
                 //     0:"backback"
                 // }]
-                var obj_dic=[,,,"bottle"]
+
+                //obj_id:obj name
+                var obj_dic=["obj0","obj1","obj2","obj3","obj4","obj5","bottle","pencil case"]
+
+                
+    
+
+                // obj_id_map = new Object;
+                // obj_id_map.
+
+
+
                 
                 
-            
+                
+                var obj_id = result[0]
                 try{
-                    checkboxOnClick(document.getElementById(result[0]))
+                    check_objname_id()
+                    console.log("objname_to_id:"+objname_to_id)
+                    checkboxOnClick(document.getElementById(objname_to_id[obj_dic[obj_id]]))
+                    // document.getElementById(0).style["background"] = "#26ca299b";
                 }
                 catch(e){
+                    console.log(e)
                     console.log(result[0])
                     //const newItem = CreateNewItem(obj_dic[result[0]])
-                    const newItem = CreateNewItem(obj_dic[result[0]])
+                    const newItem = CreateNewItem(obj_dic[obj_id])
                     console.log("id"+id)
                     checkboxOnClick(document.getElementById(id-1)) //id++ right after being created 
+                    check_objname_id()
                 }
         
                 //---------------------------
