@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
     <title>NTU Racing Team</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <!-- Bootstraps Java Scipts Links -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -26,11 +26,13 @@
 </head>
 
 <body style="    height: 100%;
-font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+font-family: 'Share Tech Mono', monospace;
+font: 16px ;
 overflow: hidden;
-background: #d9a7c7;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #fffcdc, #d9a7c7);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #fffcdc, #d9a7c7);">
+background: #2193b0;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #6dd5ed, #2193b0);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #6dd5ed, #2193b0); "></body>
 
 
 
@@ -54,27 +56,28 @@ background: linear-gradient(to right, #fffcdc, #d9a7c7);">
             font-size: 100px;
             font-weight: 100;
             text-align: center;
-            color: rgba(175, 47, 47, 0.15);
+            color:black;
             margin: 0;
             padding: 0;">E-BAG</h1>
         </header>
-        <footer class="todo-app__footer" id="todo-footer" style="background: linear-gradient(to right, #FFFFFF, #FFEFBA);">
+        <footer class="todo-app__footer" id="todo-footer" style="background: #87CEFA;  /* fallback for old browsers /*
+        ">
             <div class="todo-app__total" style="visibility: hidden;">0 left</div>
             <ul class="todo-app__view-buttons">
                 <button id="btn_all" >All</button>
                 <button id="btn_hiking" >hiking</button>
-                <button id="btn_party">party</button>                
+                <button id="btn_party">meeting</button>                
             </ul>
             <div class="todo-app__clean" style="visibility: hidden;">
                 <button>Clear Completed</button>
             </div>
         </footer>
         <section class="todo-app__main" id="input" style="width: 100%;">
-            <input class="todo-app__input" id="todo-input"  placeholder="What needs to be done?" style="background: linear-gradient(to right, #FFFFFF, #FFEFBA);">
+            <input class="todo-app__input" id="todo-input"  placeholder="What needs to be done?" style="background: #87CEFA;">
         </section>
         
 
-        <footer class="todo-app__footer" id="todo-footer" style="background: linear-gradient(to right, #FFFFFF, #FFEFBA);">
+        <footer class="todo-app__footer" id="todo-footer" style="background: #87CEFA; ">
             <div class="todo-app__total" id="total"> 0 left </div>
             <ul class="todo-app__view-buttons">
                 <button id="btn_all" >All</button>
@@ -169,7 +172,7 @@ background: linear-gradient(to right, #fffcdc, #d9a7c7);">
             const checklabel = document.createElement("label")
 
             itemNode.setAttribute("class","todo-app__item")
-            itemNode.style.background="linear-gradient(to right, #FFFFFF, #FFEFBA)"
+            itemNode.style.background=" #87CEFA"
             wrapper.setAttribute("class","todo-app__checkbox")
             checkbox.setAttribute("id", id);
             checkbox.setAttribute("class","todo-item-input");
@@ -205,8 +208,8 @@ background: linear-gradient(to right, #fffcdc, #d9a7c7);">
             if(todoListData[id].purpose=="hiking"){
                 todoCount.innerHTML = todoListData.filter(e=> e.purpose==="hiking" && !e.isComplete).length+"left"
             }
-            if(todoListData[id].purpose=="party"){
-                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="party" && !e.isComplete).length+"left"
+            if(todoListData[id].purpose=="meeting"){
+                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="meeting" && !e.isComplete).length+"left"
 
             }
             else{
@@ -255,8 +258,8 @@ background: linear-gradient(to right, #fffcdc, #d9a7c7);">
                 console.log(todoListData.filter(e=> e.purpose==="hiking").filter(e=>!e.isComplete))
                 todoCount.innerHTML = todoListData.filter(e=> e.purpose == "hiking" && !e.isComplete).length+"left"
             }
-            else if(clickedElement.purpose==="party"){
-                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="party" && !e.isComplete).length+"left"
+            else if(clickedElement.purpose==="meeting"){
+                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="meeting" && !e.isComplete).length+"left"
 
             }
             else{
@@ -283,8 +286,8 @@ background: linear-gradient(to right, #fffcdc, #d9a7c7);">
             if(clickedElement.purpose=="hiking"){
                 todoCount.innerHTML = todoListData.filter(e=> e.purpose==="hiking" && !e.isComplete).length+"left"
             }
-            if(clickedElement.purpose=="party"){
-                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="party" && !e.isComplete).length+"left"
+            if(clickedElement.purpose=="meeting"){
+                todoCount.innerHTML = todoListData.filter(e=> e.purpose==="meeting" && !e.isComplete).length+"left"
 
             }
             else{
@@ -382,14 +385,14 @@ background: linear-gradient(to right, #fffcdc, #d9a7c7);">
 
         function partyonclick(){
             todoListData.forEach(e=>{
-                if (e.purpose==="party"){
+                if (e.purpose==="meeting"){
                     e.parentNode.parentNode.style.display="" 
                 }
                 else{
                     e.parentNode.parentNode.style.display="none" 
                 }
             })
-            todoCount.innerHTML = todoListData.filter(e=> e.purpose==="party" && !e.isComplete).length+"left"
+            todoCount.innerHTML = todoListData.filter(e=> e.purpose==="meeting" && !e.isComplete).length+"left"
         }
 
 
