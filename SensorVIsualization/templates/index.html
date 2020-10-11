@@ -27,8 +27,10 @@
 
 <body style="    height: 100%;
 font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-background: rgb(245, 245, 245);
-overflow: hidden;">
+overflow: hidden;
+background: #d9a7c7;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #fffcdc, #d9a7c7);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #fffcdc, #d9a7c7);">
 
 
 
@@ -56,19 +58,23 @@ overflow: hidden;">
             margin: 0;
             padding: 0;">E-BAG</h1>
         </header>
-        <footer class="todo-app__footer" id="todo-footer">
+        <footer class="todo-app__footer" id="todo-footer" style="background: linear-gradient(to right, #FFFFFF, #FFEFBA);">
+            <div class="todo-app__total" style="visibility: hidden;">0 left</div>
             <ul class="todo-app__view-buttons">
                 <button id="btn_all" >All</button>
                 <button id="btn_hiking" >hiking</button>
                 <button id="btn_party">party</button>                
             </ul>
+            <div class="todo-app__clean" style="visibility: hidden;">
+                <button>Clear Completed</button>
+            </div>
         </footer>
         <section class="todo-app__main" id="input" style="width: 100%;">
-            <input class="todo-app__input" id="todo-input"  placeholder="What needs to be done?" >
+            <input class="todo-app__input" id="todo-input"  placeholder="What needs to be done?" style="background: linear-gradient(to right, #FFFFFF, #FFEFBA);">
         </section>
         
 
-        <footer class="todo-app__footer" id="todo-footer">
+        <footer class="todo-app__footer" id="todo-footer" style="background: linear-gradient(to right, #FFFFFF, #FFEFBA);">
             <div class="todo-app__total" id="total"> 0 left </div>
             <ul class="todo-app__view-buttons">
                 <button id="btn_all" >All</button>
@@ -163,6 +169,7 @@ overflow: hidden;">
             const checklabel = document.createElement("label")
 
             itemNode.setAttribute("class","todo-app__item")
+            itemNode.style.background="linear-gradient(to right, #FFFFFF, #FFEFBA)"
             wrapper.setAttribute("class","todo-app__checkbox")
             checkbox.setAttribute("id", id);
             checkbox.setAttribute("class","todo-item-input");
